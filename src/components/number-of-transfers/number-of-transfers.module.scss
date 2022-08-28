@@ -1,0 +1,99 @@
+.numberOfTransfers{
+    background: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 232px;
+    border-radius: 5px;
+    align-self: flex-start;
+
+    &__title{
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        padding: 20px 20px 10px 20px;
+    }
+
+    &__box{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    &__text{
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 20px;
+        padding: 10px 20px 10px 50px;
+        transition: .5s;
+        cursor: pointer;
+        position: relative;
+        &:hover{
+            background-color: #F1FCFF;
+        }
+        &::before{
+            content:'';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #9ABBCE; 
+            border-radius: 2px;
+            left: 20px;
+            top: 8px;
+        }
+        &:last-child{
+            margin-bottom: 10px;
+        }
+    }
+    &__btn{
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+
+        &--checked {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #2196F3; 
+            position: absolute;
+            left: 20px;
+            top: 8px;
+            display: none;
+
+            &::after{
+                content: '';
+                position: absolute;
+                left: 7px;
+                top: 3px;
+                width: 3px;
+                height: 8px;
+                border: solid #2196F3;
+                border-width: 0px 3px 3px 0;
+                transform: rotate(45deg);
+            }
+        }
+
+        &:checked ~ .numberOfTransfers__btn--checked{
+            display: block
+        }
+    }
+    
+}
+
+@media (max-width: 755px) {
+    .numberOfTransfers {
+       max-width: 502px;
+       width: 100%;
+       text-align: center;
+       margin: 0 auto 20px;
+
+        &__box{
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        &__text{
+            width: 95px;
+            padding: 10px 0px 10px 50px;
+            text-align: left;
+        }
+       
+    }
+}
+

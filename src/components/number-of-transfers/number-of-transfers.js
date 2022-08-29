@@ -5,9 +5,17 @@ import * as actions from '../actions/actions'
 
 import numberOfTransfers from './number-of-transfers.module.scss'
 
-function NumberOfTransfers({ btnAll, state, test1 }) {
-  console.log('component', state, btnAll, test1)
-  const { allTransplants, nonStop, oneTransplants, twoTransplants, thriTransplants } = state.filterBtn
+function NumberOfTransfers({
+  btnAll,
+  nonStop: nonStopBtn,
+  oneTransplants: oneTransplantsBtn,
+  twoTransplants: twoTransplantsBtn,
+  thriTransplants: thriTransplantsBtn,
+  state,
+}) {
+  const { allTransplants } = state
+  const { nonStop, oneTransplants, twoTransplants, thriTransplants } = state.filterBtn
+  // console.log('allTransplants', allTransplants, nonStop)
   return (
     <div className={numberOfTransfers.numberOfTransfers}>
       <div className={numberOfTransfers.numberOfTransfers__title}>Количество пересадок</div>
@@ -31,6 +39,7 @@ function NumberOfTransfers({ btnAll, state, test1 }) {
             type="checkbox"
             readOnly
             checked={nonStop}
+            onClick={nonStopBtn}
           />
           <span className={numberOfTransfers['numberOfTransfers__btn--checked']} />
           Без пересадок
@@ -42,6 +51,7 @@ function NumberOfTransfers({ btnAll, state, test1 }) {
             type="checkbox"
             readOnly
             checked={oneTransplants}
+            onClick={oneTransplantsBtn}
           />
           <span className={numberOfTransfers['numberOfTransfers__btn--checked']} />1 пересадка
         </label>
@@ -52,6 +62,7 @@ function NumberOfTransfers({ btnAll, state, test1 }) {
             type="checkbox"
             readOnly
             checked={twoTransplants}
+            onClick={twoTransplantsBtn}
           />
           <span className={numberOfTransfers['numberOfTransfers__btn--checked']} />2 пересадки
         </label>
@@ -62,6 +73,7 @@ function NumberOfTransfers({ btnAll, state, test1 }) {
             type="checkbox"
             readOnly
             checked={thriTransplants}
+            onClick={thriTransplantsBtn}
           />
           <span className={numberOfTransfers['numberOfTransfers__btn--checked']} />3 пересадки
         </label>

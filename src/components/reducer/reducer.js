@@ -5,6 +5,13 @@ const reducer = (state, action) => {
     return isAll
   }
 
+  function refreshCheckboxState(btn) {
+    const { filterBtn } = state
+    const newFilterBtn = { ...filterBtn, [btn]: !filterBtn[btn] }
+    const isAll = checkAllCheckbox(newFilterBtn)
+    return { ...state, allTransplants: isAll, filterBtn: newFilterBtn }
+  }
+
   if (state === undefined) {
     return {
       isAllCheckbox: false, // проверяем все ли checkbox выбраны
@@ -41,40 +48,28 @@ const reducer = (state, action) => {
   }
 
   if (action.type === 'nonStop') {
-    const { filterBtn } = state
-    const newFilterBtn = { ...filterBtn, nonStop: !filterBtn.nonStop }
-    const isAll = checkAllCheckbox(newFilterBtn)
-    const newState = { ...state, allTransplants: isAll, filterBtn: newFilterBtn }
+    const newState = refreshCheckboxState('nonStop')
     return {
       ...newState,
     }
   }
 
   if (action.type === 'oneTransplants') {
-    const { filterBtn } = state
-    const newFilterBtn = { ...filterBtn, oneTransplants: !filterBtn.oneTransplants }
-    const isAll = checkAllCheckbox(newFilterBtn)
-    const newState = { ...state, allTransplants: isAll, filterBtn: newFilterBtn }
+    const newState = refreshCheckboxState('oneTransplants')
     return {
       ...newState,
     }
   }
 
   if (action.type === 'twoTransplants') {
-    const { filterBtn } = state
-    const newFilterBtn = { ...filterBtn, twoTransplants: !filterBtn.twoTransplants }
-    const isAll = checkAllCheckbox(newFilterBtn)
-    const newState = { ...state, allTransplants: isAll, filterBtn: newFilterBtn }
+    const newState = refreshCheckboxState('twoTransplants')
     return {
       ...newState,
     }
   }
 
   if (action.type === 'thriTransplants') {
-    const { filterBtn } = state
-    const newFilterBtn = { ...filterBtn, thriTransplants: !filterBtn.thriTransplants }
-    const isAll = checkAllCheckbox(newFilterBtn)
-    const newState = { ...state, allTransplants: isAll, filterBtn: newFilterBtn }
+    const newState = refreshCheckboxState('thriTransplants')
     return {
       ...newState,
     }

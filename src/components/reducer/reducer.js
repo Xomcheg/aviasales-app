@@ -1,6 +1,7 @@
 const reducer = (state, action) => {
-  function checkAllCheckbox(btn) {
-    const newFilterBtn = Object.entries(btn)
+  function checkAllCheckbox(btns) {
+    // передаю в качестве параметра btns, состояние чекбоксов после того как пользователь кликнул по чекбоксу
+    const newFilterBtn = Object.entries(btns)
     const isAll = newFilterBtn.every((item) => item[1] === true) // проверяем выбраны ли все кнопки
     return isAll
   }
@@ -14,6 +15,8 @@ const reducer = (state, action) => {
 
   if (state === undefined) {
     return {
+      sortName: 'Самый дешевый',
+      sortBtnData: ['Самый дешевый', 'Самый быстрый', 'Оптимальный'],
       isAllCheckbox: false, // проверяем все ли checkbox выбраны
       allTransplants: false, // все пункты сортировки checkbox
       filterBtn: {
@@ -70,6 +73,14 @@ const reducer = (state, action) => {
 
   if (action.type === 'thriTransplants') {
     const newState = refreshCheckboxState('thriTransplants')
+    return {
+      ...newState,
+    }
+  }
+
+  if (action.type === 'btnSort') {
+    console.log('sort', action.sortName)
+    const newState = { ...state, sortName: action.sortName }
     return {
       ...newState,
     }

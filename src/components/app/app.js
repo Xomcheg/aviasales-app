@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import NumberOfTransfers from '../number-of-transfers'
 import FilterButton from '../filter-button/filter-button'
@@ -8,18 +8,18 @@ import aviasalesLogo from '../../images/aviasales-logo.png'
 import app from './app.module.scss'
 
 function App() {
-  const [ticketsArr, setticketsRequestSearchId] = useState(null)
+  // const [ticketsArr, setticketsRequestSearchId] = useState(null)
 
-  useEffect(() => {
-    console.log('useEffect')
-    fetch('https://front-test.dev.aviasales.ru/search')
-      .then((res) => res.json())
-      .then((body) => body)
-      .then((body) => fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${body.searchId}`))
-      .then((res) => res.json())
-      .then((body) => setticketsRequestSearchId(body.tickets))
-  }, [])
-  console.log(ticketsArr)
+  // useEffect(() => {
+  //   console.log('useEffect')
+  //   fetch('https://front-test.dev.aviasales.ru/search')
+  //     .then((res) => res.json())
+  //     .then((body) => body)
+  //     .then((body) => fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${body.searchId}`))
+  //     .then((res) => res.json())
+  //     .then((body) => setticketsRequestSearchId(body.tickets))
+  // }, [])
+  // console.log(ticketsArr)
 
   return (
     <div className={app.container}>

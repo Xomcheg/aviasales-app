@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from '../actions/actions'
@@ -11,11 +11,16 @@ function NumberOfTransfers({
   oneTransplants: oneTransplantsBtn,
   twoTransplants: twoTransplantsBtn,
   thriTransplants: thriTransplantsBtn,
+  getTickets,
   state,
 }) {
   const { allTransplants } = state
   const { nonStop, oneTransplants, twoTransplants, thriTransplants } = state.filterBtn
-  // console.log('allTransplants', allTransplants, nonStop)
+
+  useEffect(() => {
+    console.log('useEffect')
+    getTickets()
+  }, [])
   return (
     <div className={numberOfTransfers.numberOfTransfers}>
       <div className={numberOfTransfers.numberOfTransfers__title}>Количество пересадок</div>
@@ -78,6 +83,9 @@ function NumberOfTransfers({
           <span className={numberOfTransfers['numberOfTransfers__btn--checked']} />3 пересадки
         </label>
       </div>
+      {/* <button type="button" onClick={() => asyncBtn(100)}>
+        асинхронная кнопка
+      </button> */}
     </div>
   )
 }

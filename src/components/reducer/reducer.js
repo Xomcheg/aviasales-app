@@ -15,6 +15,7 @@ const reducer = (state, action) => {
 
   if (state === undefined) {
     return {
+      tickets: [],
       sortName: 'Самый дешевый',
       sortBtnData: ['Самый дешевый', 'Самый быстрый', 'Оптимальный'],
       isAllCheckbox: false, // проверяем все ли checkbox выбраны
@@ -84,6 +85,23 @@ const reducer = (state, action) => {
     return {
       ...newState,
     }
+  }
+
+  if (action.type === 'getTicketsData') {
+    console.log('getTicketsData', 100)
+    fetch('https://front-test.dev.aviasales.ru/search')
+      .then((res) => res.json())
+      .then((body) => body)
+      .then((body) => fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${body.searchId}`))
+      .then((res) => res.json())
+      .then((body) => {
+        const newTicketsArr = []
+        console.log(body)
+        for (let i = 0; i < 5; i += 1) {
+          newTicketsArr.push(body.tickets[i])
+        }
+        console.log(newTicketsArr)
+      })
   }
   return state
 }

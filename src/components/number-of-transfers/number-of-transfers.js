@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
+// import Spinner from '../spinner/spinner'
 import * as actions from '../actions/actions'
 
 import numberOfTransfers from './number-of-transfers.module.scss'
@@ -21,6 +22,8 @@ function NumberOfTransfers({
     console.log('useEffect')
     getTickets()
   }, [])
+
+  // const elements =
   return (
     <div className={numberOfTransfers.numberOfTransfers}>
       <div className={numberOfTransfers.numberOfTransfers__title}>Количество пересадок</div>
@@ -83,14 +86,10 @@ function NumberOfTransfers({
           <span className={numberOfTransfers['numberOfTransfers__btn--checked']} />3 пересадки
         </label>
       </div>
-      {/* <button type="button" onClick={() => asyncBtn(100)}>
-        асинхронная кнопка
-      </button> */}
     </div>
   )
 }
 
-// const mapStateToProps = (state) => ({ counter: state })
 const mapStateToProps = (state) => ({
   state,
 })

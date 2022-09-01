@@ -7,6 +7,7 @@ import reduxThunc from 'redux-thunk'
 
 import reducer from './components/reducer'
 import App from './components/app'
+import 'antd/dist/antd.css'
 import './index.css'
 
 const composeEnhancers =

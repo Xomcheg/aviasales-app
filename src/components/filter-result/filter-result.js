@@ -1,50 +1,30 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-import airlineLogo from '../../images/airlines-logo.png'
+import * as actions from '../actions/actions'
 
-import filterResult from './filter-result.module.scss'
+import FilterResultItem from './filter-result-item'
 
-function FilterResult() {
+// import airlineLogo from '../../images/airlines-logo.png'
+
+// import filterResult from './filter-result.module.scss'
+
+function FilterResult({ state }) {
+  const { tickets } = state
+  console.log('tickets', tickets)
+  const elements = tickets.map((item) => {
+    const newItem = <FilterResultItem props={item} />
+    return newItem
+  })
+  console.log('elements', elements)
   return (
-    <div className={filterResult.ticket}>
-      <div className={filterResult.ticket__header}>
-        <div className={filterResult.ticket__price}>13 400 Р</div>
-        <div className={filterResult.ticket__logo}>
-          <img src={airlineLogo} alt="logo" />
-        </div>
-      </div>
-      <div className={filterResult.ticket__info}>
-        <div className={filterResult.ticket__from}>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>MOW - HKT</div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
-          </div>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>В пути</div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
-          </div>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>пересадки</div>
-            <div className={filterResult['ticket__box-flight']}>Места пересадок</div>
-          </div>
-        </div>
-        <div className={filterResult.ticket__to}>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>MOW - HKT</div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
-          </div>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>В пути</div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
-          </div>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>пересадки</div>
-            <div className={filterResult['ticket__box-flight']}>Места пересадок</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    // еуые
+    <div>{elements}</div>
   )
 }
 
-export default FilterResult
+const mapStateToProps = (state) => ({
+  state,
+})
+
+export default connect(mapStateToProps, actions)(FilterResult)

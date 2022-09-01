@@ -6,12 +6,17 @@ import filterResult from './filter-result.module.scss'
 
 function FilterResultItem({ props }) {
   const { price, segments } = props
-  //   const { [segments[0]]: there, [segments[1]]: back } = segments
   const there = segments[0]
-  const { origin: thereOrigin, destination: thereDestination, date: thereDate, stops: thereStops } = there
+  const {
+    origin: thereOrigin,
+    destination: thereDestination,
+    // date: thereDate,
+    duration: thereDuration,
+    stops: thereStops,
+  } = there
   const back = segments[1]
-  const { origin: backOrigin, destination: backDestination, date: backDate, stops: backStops } = there
-  console.log('segments', there, back)
+  const { origin: backOrigin, destination: backDestination, duration: backDuration, stops: backStops } = back
+  // console.log('segments', there, back)
   let thereStopsTitle = ''
   if (thereStops.length === 0) {
     thereStopsTitle = 'Без пересадок'
@@ -24,19 +29,30 @@ function FilterResultItem({ props }) {
   }
 
   let backStopsTitle = ''
-  if (thereStops.length === 0) {
+  if (backStops.length === 0) {
     backStopsTitle = 'Без пересадок'
-  } else if (thereStops.length === 1) {
+  } else if (backStops.length === 1) {
     backStopsTitle = 'Пересадка'
-  } else if (thereStops.length >= 2 && thereStops.length <= 4) {
+  } else if (backStops.length >= 2 && backStops.length <= 4) {
     backStopsTitle = 'Пересадки'
   } else {
     backStopsTitle = 'Пересадок'
   }
 
-  const thereStopsData = thereStops.join(', ')
-  console.log('thereStopsData', thereStopsData)
-  console.log('props', props)
+  // const thereDateNew = new Date(thereDate)
+  // const thereDateRes = [thereDateNew.getHours(), thereDateNew.getMinutes()].map
+
+  // console.log('thereDate', thereDateRes)
+
+  const thereHour = Math.floor(thereDuration / 60)
+  const thereMin = thereDuration - thereHour * 60
+
+  const backHour = Math.floor(backDuration / 60)
+  const backMin = backDuration - backHour * 60
+
+  // const thereStopsData = thereStops.join(', ')
+  // console.log('thereStopsData', thereStopsData)
+  // console.log('props', props)
 
   return (
     <div className={filterResult.ticket}>
@@ -56,11 +72,13 @@ function FilterResultItem({ props }) {
           </div>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>В пути</div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
+            <div className={filterResult['ticket__box-flight']}>
+              {thereHour}ч {thereMin}м
+            </div>
           </div>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>
-              {thereStops.length} {thereStopsTitle}
+              {thereStops.length === 0 ? null : thereStops.length} {thereStopsTitle}
             </div>
             <div className={filterResult['ticket__box-flight']}>{thereStops.join(', ')}</div>
           </div>
@@ -74,7 +92,9 @@ function FilterResultItem({ props }) {
           </div>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>В пути</div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
+            <div className={filterResult['ticket__box-flight']}>
+              {backHour}ч {backMin}м
+            </div>
           </div>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>

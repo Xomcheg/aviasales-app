@@ -10,8 +10,9 @@ function FilterButton({ state, btnSort }) {
   let id = 200
   const elements = sortBtnData.map((item) => {
     const btnSortName = item.toLowerCase()
+    const sortNameData = sortName.toLowerCase()
     const classes = [filterButton.filterButton__btn]
-    if (sortName.toLowerCase() === btnSortName) {
+    if (sortNameData === btnSortName) {
       classes.push(filterButton['filterButton__btn--active'])
     }
     const newItem = (

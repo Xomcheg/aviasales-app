@@ -7,16 +7,9 @@ import filterResult from './filter-result.module.scss'
 function FilterResultItem({ props }) {
   const { price, segments } = props
   const there = segments[0]
-  const {
-    origin: thereOrigin,
-    destination: thereDestination,
-    // date: thereDate,
-    duration: thereDuration,
-    stops: thereStops,
-  } = there
+  const { origin: thereOrigin, destination: thereDestination, duration: thereDuration, stops: thereStops } = there
   const back = segments[1]
   const { origin: backOrigin, destination: backDestination, duration: backDuration, stops: backStops } = back
-  // console.log('segments', there, back)
   let thereStopsTitle = ''
   if (thereStops.length === 0) {
     thereStopsTitle = 'Без пересадок'

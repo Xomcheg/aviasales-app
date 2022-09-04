@@ -11,19 +11,17 @@ function NumberOfTransfers({
   nonStop: nonStopBtn,
   oneTransplants: oneTransplantsBtn,
   twoTransplants: twoTransplantsBtn,
-  thriTransplants: thriTransplantsBtn,
+  threeTransplants: threeTransplantsBtn,
   getTickets,
   state,
 }) {
   const { allTransplants } = state
-  const { nonStop, oneTransplants, twoTransplants, thriTransplants } = state.filterBtn
+  const { nonStop, oneTransplants, twoTransplants, threeTransplants } = state.filterBtn
 
   useEffect(() => {
-    console.log('useEffect')
     getTickets()
   }, [])
 
-  // const elements =
   return (
     <div className={numberOfTransfers.numberOfTransfers}>
       <div className={numberOfTransfers.numberOfTransfers__title}>Количество пересадок</div>
@@ -80,8 +78,8 @@ function NumberOfTransfers({
             id="three-change"
             type="checkbox"
             readOnly
-            checked={thriTransplants}
-            onClick={thriTransplantsBtn}
+            checked={threeTransplants}
+            onClick={threeTransplantsBtn}
           />
           <span className={numberOfTransfers['numberOfTransfers__btn--checked']} />3 пересадки
         </label>

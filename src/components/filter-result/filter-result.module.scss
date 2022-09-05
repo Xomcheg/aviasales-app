@@ -7,9 +7,19 @@
     padding: 20px;
     margin: 20px 0;
 
+    &__info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__wrapper{
+        display: flex;
+        flex-direction: column;
+    }
     &__header{
         display: flex;
         justify-content: space-between;
+        padding-bottom: 10px;
     }
 
     &__price{
@@ -20,18 +30,9 @@
         color: #2196F3;
     }
 
-    &__from{
-        padding: 20px 0;
-    }
-
-    &__from,
-    &__to{
-        display: flex;
-        justify-content: space-between;
-    }
-
     &__box{
         max-width: 141px;
+        padding: 10px 0;
     }
 
     &__box-title{
@@ -44,11 +45,17 @@
     &__box-flight{
         font-size: 14px;
         line-height: 21px;
+        font-weight: 600;
+    }
+    &__box-stops{
+        text-align: center;
+        display: block
     }
 }
 
 .message {
   margin-top: 50px;
+  margin-bottom: 50px;
   text-align: center;
   font-weight: 600;
   font-size: 12px;

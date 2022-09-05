@@ -14,14 +14,12 @@ function FilterResult({ state }) {
     const newItem = <FilterResultItem props={item} />
     return newItem
   })
-  console.log('loading', displayTickets.length)
   const message = <div className={filterResult.message}>Рейсов, подходящих под заданные фильтры, не найдено</div>
   const errorMessage = <ErrorIndicator message={errorText} />
   const spinnerDisplay = loading && !error ? <Spinner /> : null
   const messageDisplay = spinnerDisplay || error || displayTickets.length !== 0 ? null : message
   const errorDisplay = error ? errorMessage : null
   return (
-    // еуые
     <div>
       {errorDisplay}
       {spinnerDisplay}

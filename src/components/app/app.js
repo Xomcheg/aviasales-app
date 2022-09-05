@@ -24,9 +24,11 @@ function App({ addFiveTickets }) {
           <FilterResult />
         </div>
       </div>
-      <button className={app.aviaseles__button} type="button" onClick={addFiveTickets}>
-        Показать еще 5 билетов!
-      </button>
+      <div className={app.aviaseles__btn}>
+        <button className={app.aviaseles__button} type="button" onClick={addFiveTickets}>
+          Показать еще 5 билетов!
+        </button>
+      </div>
     </div>
   )
 }

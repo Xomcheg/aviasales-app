@@ -6,94 +6,121 @@ import filterResult from './filter-result.module.scss'
 
 function FilterResultItem({ props }) {
   const { price, segments } = props
+
   const there = segments[0]
-  const { origin: thereOrigin, destination: thereDestination, duration: thereDuration, stops: thereStops } = there
+  const {
+    origin: thereOrigin,
+    destination: thereDestination,
+    duration: thereDuration,
+    date: thereDate,
+    stops: thereStops,
+  } = there
+
   const back = segments[1]
-  const { origin: backOrigin, destination: backDestination, duration: backDuration, stops: backStops } = back
-  let thereStopsTitle = ''
-  if (thereStops.length === 0) {
-    thereStopsTitle = 'Без пересадок'
-  } else if (thereStops.length === 1) {
-    thereStopsTitle = 'Пересадка'
-  } else if (thereStops.length >= 2 && thereStops.length <= 4) {
-    thereStopsTitle = 'Пересадки'
-  } else {
-    thereStopsTitle = 'Пересадок'
+  const {
+    origin: backOrigin,
+    destination: backDestination,
+    duration: backDuration,
+    date: backDate,
+    stops: backStops,
+  } = back
+
+  function timing(date, duration) {
+    const newDate = new Date(date)
+    const hours = newDate.getHours()
+    const minutes = newDate.getMinutes()
+    const arrivalTime = hours * 60 + minutes + duration
+    const arrivalTimeHours = Math.floor(arrivalTime / 60)
+    const arrivalTimeMinutes = arrivalTime - arrivalTimeHours * 60
+    const newArrivalHours = arrivalTimeHours >= 24 ? arrivalTimeHours - 24 : arrivalTimeHours
+    const startTime = `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}`
+    const finishTime = `${newArrivalHours < 10 ? `0${newArrivalHours}` : newArrivalHours}:${
+      arrivalTimeMinutes < 10 ? `0${arrivalTimeMinutes}` : arrivalTimeMinutes
+    }`
+    return `${startTime} - ${finishTime}`
   }
 
-  let backStopsTitle = ''
-  if (backStops.length === 0) {
-    backStopsTitle = 'Без пересадок'
-  } else if (backStops.length === 1) {
-    backStopsTitle = 'Пересадка'
-  } else if (backStops.length >= 2 && backStops.length <= 4) {
-    backStopsTitle = 'Пересадки'
-  } else {
-    backStopsTitle = 'Пересадок'
+  function renameStopsTitle(nameStops) {
+    let text = ''
+    if (nameStops.length === 0) {
+      text = 'Без пересадок'
+    } else if (nameStops.length === 1) {
+      text = 'Пересадка'
+    } else if (nameStops.length >= 2 && nameStops.length <= 4) {
+      text = 'Пересадки'
+    } else {
+      text = 'Пересадок'
+    }
+    return text
   }
 
-  // const thereDateNew = new Date(thereDate)
-  // const thereDateRes = [thereDateNew.getHours(), thereDateNew.getMinutes()].map
-
-  // console.log('thereDate', thereDateRes)
-
-  const thereHour = Math.floor(thereDuration / 60)
-  const thereMin = thereDuration - thereHour * 60
-
-  const backHour = Math.floor(backDuration / 60)
-  const backMin = backDuration - backHour * 60
-
-  // const thereStopsData = thereStops.join(', ')
-  // console.log('thereStopsData', thereStopsData)
-  // console.log('props', props)
+  function transformDuration(time) {
+    const hour = Math.floor(time / 60)
+    const min = time - hour * 60
+    return `${hour} ч ${min} м`
+  }
 
   return (
     <div className={filterResult.ticket}>
       <div className={filterResult.ticket__header}>
-        <div className={filterResult.ticket__price}>{price} Р</div>
+        <div className={filterResult.ticket__price}>
+          {String(price).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')} Р
+        </div>
         <div className={filterResult.ticket__logo}>
           <img src={airlineLogo} alt="logo" />
         </div>
       </div>
       <div className={filterResult.ticket__info}>
-        <div className={filterResult.ticket__from}>
+        <div className={filterResult.ticket__wrapper}>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>
               {thereOrigin} - {thereDestination}
             </div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
+            <div className={filterResult['ticket__box-flight']}>{timing(thereDate, thereDuration)}</div>
           </div>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>В пути</div>
-            <div className={filterResult['ticket__box-flight']}>
-              {thereHour}ч {thereMin}м
-            </div>
-          </div>
-          <div className={filterResult.ticket__box}>
-            <div className={filterResult['ticket__box-title']}>
-              {thereStops.length === 0 ? null : thereStops.length} {thereStopsTitle}
-            </div>
-            <div className={filterResult['ticket__box-flight']}>{thereStops.join(', ')}</div>
-          </div>
-        </div>
-        <div className={filterResult.ticket__to}>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>
               {backOrigin} - {backDestination}
             </div>
-            <div className={filterResult['ticket__box-flight']}>time</div>
+            <div className={filterResult['ticket__box-flight']}>{timing(backDate, backDuration)}</div>
+          </div>
+        </div>
+
+        <div className={filterResult.ticket__wrapper}>
+          <div className={filterResult.ticket__box}>
+            <div className={filterResult['ticket__box-title']}>В пути</div>
+            <div className={filterResult['ticket__box-flight']}>{transformDuration(thereDuration)}</div>
           </div>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>В пути</div>
+            <div className={filterResult['ticket__box-flight']}>{transformDuration(backDuration)}</div>
+          </div>
+        </div>
+
+        <div className={filterResult.ticket__wrapper}>
+          <div className={filterResult.ticket__box}>
+            <div className={filterResult['ticket__box-title']}>
+              {thereStops.length === 0 ? null : thereStops.length} {renameStopsTitle(thereStops)}
+            </div>
             <div className={filterResult['ticket__box-flight']}>
-              {backHour}ч {backMin}м
+              {thereStops.join(', ').length === 0 ? (
+                <span className={filterResult['ticket__box-stops']}>-</span>
+              ) : (
+                thereStops.join(', ')
+              )}
             </div>
           </div>
           <div className={filterResult.ticket__box}>
             <div className={filterResult['ticket__box-title']}>
-              {backStops.length === 0 ? null : backStops.length} {backStopsTitle}
+              {backStops.length === 0 ? null : backStops.length} {renameStopsTitle(backStops)}
             </div>
-            <div className={filterResult['ticket__box-flight']}>{backStops.join(', ')}</div>
+            <div className={filterResult['ticket__box-flight']}>
+              {backStops.join(', ').length === 0 ? (
+                <span className={filterResult['ticket__box-stops']}>-</span>
+              ) : (
+                backStops.join(', ')
+              )}
+            </div>
           </div>
         </div>
       </div>

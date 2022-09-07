@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-// import Spinner from '../spinner/spinner'
 import * as actions from '../actions/actions'
 
 import numberOfTransfers from './number-of-transfers.module.scss'

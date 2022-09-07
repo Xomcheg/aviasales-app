@@ -7,7 +7,6 @@ import reduxThunc from 'redux-thunk'
 
 import reducer from './components/reducer'
 import App from './components/app'
-// import 'antd/dist/antd.css'
 import './index.css'
 
 const composeEnhancers =
@@ -24,14 +23,14 @@ const composeEnhancers =
 //     }
 //   }
 // }
-const loggerMiddleware = (store) => (next) => (action) => {
-  const result = next(action)
-  console.log('Middlewar', store.getState())
-  return result
-}
+// const loggerMiddleware = (store) => (next) => (action) => {
+//   const result = next(action)
+//   console.log('Middlewar', store.getState())
+//   return result
+// }
 
-const store = createStore(reducer, composeEnhancers(applyMiddleware(loggerMiddleware, reduxThunc)))
-// const store = createStore(reducer, composeEnhancers(applyMiddleware(reduxThunc)))
+// const store = createStore(reducer, composeEnhancers(applyMiddleware(loggerMiddleware, reduxThunc)))
+const store = createStore(reducer, composeEnhancers(applyMiddleware(reduxThunc)))
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(

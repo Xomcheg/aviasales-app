@@ -4,6 +4,7 @@ const reducer = (state, action) => {
       allTickets: [],
       filterTickets: [],
       displayTickets: [],
+      counterDisplayTickets: 5,
       loading: true,
       error: false,
       errorText: '',
@@ -112,7 +113,7 @@ const reducer = (state, action) => {
       allTransplants: isAll,
       filterBtn: newFilterBtn,
       allTickets: tickets,
-      displayTickets: [...finalTicketsArray.slice(0, 4)],
+      displayTickets: [...finalTicketsArray.slice(0, state.counterDisplayTickets)],
     }
   }
 
@@ -162,7 +163,7 @@ const reducer = (state, action) => {
       ...state,
       sortName: action.sortName,
       filterTickets: finalTicketsArray,
-      displayTickets: [...finalTicketsArray.slice(0, 4)],
+      displayTickets: [...finalTicketsArray.slice(0, state.counterDisplayTickets)],
     }
   }
 
@@ -176,9 +177,9 @@ const reducer = (state, action) => {
 
   if (action.type === 'addFiveTickets') {
     const displayTicketsLength = state.displayTickets.length
-    const idx = displayTicketsLength + 5
+    const idx = state.counterDisplayTickets + 5
     const newFilterTicketsArr = [...state.displayTickets, ...state.filterTickets.slice(displayTicketsLength, idx)]
-    newState = { ...state, displayTickets: newFilterTicketsArr }
+    newState = { ...state, counterDisplayTickets: idx, displayTickets: newFilterTicketsArr }
   }
 
   if (action.type === 'getTicketsData') {

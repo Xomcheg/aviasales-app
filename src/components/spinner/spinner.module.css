@@ -8,8 +8,6 @@
 .example {
   margin: 10px auto 0;
   text-align: center;
-  /* display: flex;
-  flex-direction: column; */
   font-weight: 600;
   font-size: 12px;
   font-family: 'Open Sans', sans-serif;

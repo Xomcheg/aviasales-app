@@ -9,7 +9,14 @@ import aviasalesLogo from '../../images/aviasales-logo.png'
 
 import app from './app.module.scss'
 
-function App({ addFiveTickets }) {
+function App({ addFiveTickets, state }) {
+  const { displayTickets, loading, error } = state
+  const button = (
+    <button className={app.aviaseles__button} type="button" onClick={addFiveTickets}>
+      Показать еще 5 билетов!
+    </button>
+  )
+  const buttonDisplay = loading || error || displayTickets.length === 0 ? null : button
   return (
     <div className={app.container}>
       <div className={app.aviaseles__logo}>
@@ -24,11 +31,7 @@ function App({ addFiveTickets }) {
           <FilterResult />
         </div>
       </div>
-      <div className={app.aviaseles__btn}>
-        <button className={app.aviaseles__button} type="button" onClick={addFiveTickets}>
-          Показать еще 5 билетов!
-        </button>
-      </div>
+      <div className={app.aviaseles__btn}>{buttonDisplay}</div>
     </div>
   )
 }
@@ -37,5 +40,4 @@ const mapStateToProps = (state) => ({
   state,
 })
 
-// export default App
 export default connect(mapStateToProps, actions)(App)

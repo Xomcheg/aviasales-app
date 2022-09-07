@@ -1,11 +1,13 @@
 import React from 'react'
 
-import airlineLogo from '../../images/airlines-logo.png'
+// import airlineLogo from '../../images/airlines-logo.png'
 
 import filterResult from './filter-result.module.scss'
 
 function FilterResultItem({ props }) {
-  const { price, segments } = props
+  const { price, segments, carrier } = props
+  // const logo = getCarrier(carrier)
+  // console.log('carier', logo)
 
   const there = segments[0]
   const {
@@ -67,7 +69,7 @@ function FilterResultItem({ props }) {
           {String(price).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')} Р
         </div>
         <div className={filterResult.ticket__logo}>
-          <img src={airlineLogo} alt="logo" />
+          <img src={`https://pics.avs.io/99/36/${carrier}.png`} alt="logo" />
         </div>
       </div>
       <div className={filterResult.ticket__info}>

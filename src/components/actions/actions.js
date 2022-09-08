@@ -25,7 +25,11 @@ export const getTickets = () => (dispatch) => {
     let counter = 0
     do {
       // eslint-disable-next-line no-await-in-loop
-      response = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${id.searchId}`)
+      response = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${id.searchId}`).catch((err) => {
+        console.log('eerpererer', err)
+        dispatch(errorStatus(true, 'Нет интернета'))
+        throw err
+      })
       if (response.ok) {
         // eslint-disable-next-line no-await-in-loop
         json = await response.json()
@@ -45,11 +49,11 @@ export const getTickets = () => (dispatch) => {
   }
   getAllTickets()
 }
-
-// export const getCarrier = (name) => async () => {
-//   // async function getLogo() {
-//   const logo = `https://pics.avs.io/99/36/${name}.png`
-//   console.log('test', logo)
-//   return logo
-//   // }
+// export const checkOnlineStatus = () => async (dispatch) => {
+//   const response = await fetch('http://google.com')
+//   if (response.ok) {
+//     console.log('trueeeeeeeeeeee')
+//   } else {
+//     console.log('falseeeeeeeeeee')
+//   }
 // }

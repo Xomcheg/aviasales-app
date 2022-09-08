@@ -117,6 +117,16 @@ const reducer = (state, action) => {
     }
   }
 
+  // function checkOnlineStatus() {
+  //   const response = fetch('http://google.com')
+  //   if (response.ok) {
+  //     console.log('trueeeeeeeeeeee')
+  //   } else {
+  //     console.log('falseeeeeeeeeee')
+  //     // (errorStatus(true, 'Нет интернета'))
+  //   }
+  // }
+
   if (action.type === 'btnAll') {
     const { allTransplants } = state
     const value = !allTransplants
@@ -138,6 +148,7 @@ const reducer = (state, action) => {
   if (action.type === 'nonStop') {
     const newFilterBtn = { ...filterBtn, nonStop: !filterBtn.nonStop }
     newState = processFilterAction(newFilterBtn)
+    // checkOnlineStatus()
   }
 
   if (action.type === 'oneTransplants') {

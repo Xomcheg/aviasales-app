@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const reducer = (state, action) => {
   if (state === undefined) {
     return {
@@ -20,9 +21,6 @@ const reducer = (state, action) => {
       },
     }
   }
-
-  const { filterBtn } = state
-  let newState
 
   function checkAllCheckbox(btns) {
     // передаю в качестве параметра btns, состояние чекбоксов после того как пользователь кликнул по чекбоксу
@@ -117,90 +115,61 @@ const reducer = (state, action) => {
     }
   }
 
-  // function checkOnlineStatus() {
-  //   const response = fetch('http://google.com')
-  //   if (response.ok) {
-  //     console.log('trueeeeeeeeeeee')
-  //   } else {
-  //     console.log('falseeeeeeeeeee')
-  //     // (errorStatus(true, 'Нет интернета'))
-  //   }
-  // }
+  const { filterBtn } = state
 
-  if (action.type === 'btnAll') {
-    const { allTransplants } = state
-    const value = !allTransplants
-    // определяю значение кнопки "все", инвертирую ее и затем проверяю остальные чекбоксы
-    // если значение чекбокса не равно value то переопределяю его на value
-
-    const currentButtonValues = Object.entries(filterBtn)
-    const newFilterBtn = currentButtonValues.map((item) => {
-      const newItem = item
-      if (newItem[1] !== value) {
-        newItem[1] = value
+  switch (action.type) {
+    case 'btnAll': {
+      const { allTransplants } = state
+      const value = !allTransplants
+      // определяю значение кнопки "все", инвертирую ее и затем проверяю остальные чекбоксы
+      // если значение чекбокса не равно value то переопределяю его на value
+      const currentButtonValues = Object.entries(filterBtn)
+      const newFilterBtn = currentButtonValues.map((item) => {
+        const newItem = item
+        if (newItem[1] !== value) {
+          newItem[1] = value
+          return newItem
+        }
         return newItem
+      })
+      return {
+        ...processFilterAction(Object.fromEntries(newFilterBtn)),
       }
-      return newItem
-    })
-    newState = processFilterAction(Object.fromEntries(newFilterBtn))
-  }
-
-  if (action.type === 'nonStop') {
-    const newFilterBtn = { ...filterBtn, nonStop: !filterBtn.nonStop }
-    newState = processFilterAction(newFilterBtn)
-    // checkOnlineStatus()
-  }
-
-  if (action.type === 'oneTransplants') {
-    const newFilterBtn = { ...filterBtn, oneTransplants: !filterBtn.oneTransplants }
-    newState = processFilterAction(newFilterBtn)
-  }
-
-  if (action.type === 'twoTransplants') {
-    const newFilterBtn = { ...filterBtn, twoTransplants: !filterBtn.twoTransplants }
-    newState = processFilterAction(newFilterBtn)
-  }
-
-  if (action.type === 'threeTransplants') {
-    const newFilterBtn = { ...filterBtn, threeTransplants: !filterBtn.threeTransplants }
-    newState = processFilterAction(newFilterBtn)
-  }
-
-  if (action.type === 'btnSort') {
-    const oldAllTickets = [...state.filterTickets]
-    const finalTicketsArray = processSortAction(action.sortName, oldAllTickets)
-
-    newState = {
-      ...state,
-      sortName: action.sortName,
-      filterTickets: finalTicketsArray,
-      displayTickets: [...finalTicketsArray.slice(0, state.counterDisplayTickets)],
     }
-  }
-
-  if (action.type === 'loadingStatus') {
-    newState = { ...state, loading: action.payload }
-  }
-
-  if (action.type === 'errorStatus') {
-    newState = { ...state, error: action.payload, errorText: action.message }
-  }
-
-  if (action.type === 'addFiveTickets') {
-    const displayTicketsLength = state.displayTickets.length
-    const idx = state.counterDisplayTickets + 5
-    const newFilterTicketsArr = [...state.displayTickets, ...state.filterTickets.slice(displayTicketsLength, idx)]
-    newState = { ...state, counterDisplayTickets: idx, displayTickets: newFilterTicketsArr }
-  }
-
-  if (action.type === 'getTicketsData') {
-    const { allTickets } = state
-    const newAllTickets = [...allTickets, ...action.payload]
-    newState = processFilterAction(filterBtn, newAllTickets)
-  }
-
-  return {
-    ...newState,
+    case 'nonStop':
+      return processFilterAction({ ...filterBtn, nonStop: !filterBtn.nonStop })
+    case 'getTicketsData':
+      return processFilterAction(filterBtn, [...state.allTickets, ...action.payload])
+    case 'oneTransplants':
+      return processFilterAction({ ...filterBtn, oneTransplants: !filterBtn.oneTransplants })
+    case 'twoTransplants':
+      return processFilterAction({ ...filterBtn, twoTransplants: !filterBtn.twoTransplants })
+    case 'threeTransplants':
+      return processFilterAction({ ...filterBtn, threeTransplants: !filterBtn.threeTransplants })
+    case 'btnSort':
+      return {
+        ...state,
+        sortName: action.sortName,
+        filterTickets: processSortAction(action.sortName, [...state.filterTickets]),
+        displayTickets: [
+          ...processSortAction(action.sortName, [...state.filterTickets]).slice(0, state.counterDisplayTickets),
+        ],
+      }
+    case 'loadingStatus':
+      return { ...state, loading: action.payload }
+    case 'errorStatus':
+      return { ...state, error: action.payload, errorText: action.message }
+    case 'addFiveTickets':
+      return {
+        ...state,
+        counterDisplayTickets: state.counterDisplayTickets + 5,
+        displayTickets: [
+          ...state.displayTickets,
+          ...state.filterTickets.slice(state.displayTickets.length, state.counterDisplayTickets + 5),
+        ],
+      }
+    default:
+      return state
   }
 }
 

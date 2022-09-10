@@ -13,22 +13,26 @@ export const getTicketsData = (arr) => ({ type: 'getTicketsData', payload: arr }
 export const getTickets = () => (dispatch) => {
   dispatch(loadingStatus(true))
   async function getAllTickets() {
-    const id = await fetch('https://front-test.dev.aviasales.ru/search').then((res) => {
-      if (!res.ok) {
-        dispatch(errorStatus(true, 'Ошибка при получении ключа searchId'))
-        console.log('error')
-      }
-      return res.json()
-    })
+    const id = await fetch('https://front-test.dev.aviasales.ru/search')
+      .then((res) => {
+        if (!res.ok) {
+          dispatch(errorStatus(true, 'Ошибка при получении ключа searchId'))
+          throw new Error('newError')
+        }
+        return res.json()
+      })
+      .catch((err) => {
+        if (err !== 'newError') {
+          dispatch(errorStatus(true, 'Что-то пошло не так'))
+        }
+      })
     let json
     let response
     let counter = 0
     do {
       // eslint-disable-next-line no-await-in-loop
-      response = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${id.searchId}`).catch((err) => {
-        console.log('eerpererer', err)
-        dispatch(errorStatus(true, 'Нет интернета'))
-        throw err
+      response = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${id.searchId}`).catch(() => {
+        dispatch(errorStatus(true, 'Что-то пошло не так'))
       })
       if (response.ok) {
         // eslint-disable-next-line no-await-in-loop
@@ -49,11 +53,3 @@ export const getTickets = () => (dispatch) => {
   }
   getAllTickets()
 }
-// export const checkOnlineStatus = () => async (dispatch) => {
-//   const response = await fetch('http://google.com')
-//   if (response.ok) {
-//     console.log('trueeeeeeeeeeee')
-//   } else {
-//     console.log('falseeeeeeeeeee')
-//   }
-// }

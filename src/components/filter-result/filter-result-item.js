@@ -1,13 +1,9 @@
 import React from 'react'
 
-// import airlineLogo from '../../images/airlines-logo.png'
-
 import filterResult from './filter-result.module.scss'
 
 function FilterResultItem({ props }) {
   const { price, segments, carrier } = props
-  // const logo = getCarrier(carrier)
-  // console.log('carier', logo)
 
   const there = segments[0]
   const {
